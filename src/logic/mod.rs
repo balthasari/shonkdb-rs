@@ -1,10 +1,11 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
-use std::{any::Any, iter::zip, sync::mpsc::Iter, vec};
+use serde_json::{from_reader, from_str, to_string, to_string_pretty, to_writer, to_writer_pretty};
+use std::{any::Any, iter::zip, path::Path, sync::mpsc::Iter, vec};
 use uuid::Uuid;
 
 #[derive(Serialize, Deserialize)]
-struct Shonk {
+pub struct Shonk {
     tables: Vec<String>, //path to table
 }
 impl Shonk {
@@ -22,14 +23,19 @@ impl Shonk {
     }
 }
 
+const ROOT: &str = "hajhom/";
+const DATA_PATH: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/data/input.txt");
+
 #[derive(Serialize, Deserialize)]
-struct Haj<T: Default> {
+pub struct Haj<T: Default> {
+    path: String, //eigentlich of type Path
     records: Vec<HajFren<T>>,
 }
 
 impl<T: Default> Haj<T> {
     fn new() -> Self {
         Self {
+            path: "shorkattak".to_owned(),
             records: Vec::new(),
         }
     }
@@ -69,10 +75,19 @@ impl<T: Default> Haj<T> {
                 .collect()
         }
     }
+
+    fn write_self(&mut self) {
+        //Write self to file at ROOT + path
+    }
+
+    fn load_from(path: String) -> Self {
+        Self::new()
+        //Actually: Return new Self-instance, deserialized from file at ROOT + path
+    }
 }
 
 #[derive(Serialize, Deserialize)]
-struct HajFren<T: Default> {
+pub struct HajFren<T: Default> {
     uuid: Uuid,
     dt_created: DateTime<Utc>,
     dt_changed: DateTime<Utc>,
@@ -81,7 +96,7 @@ struct HajFren<T: Default> {
     tags: Vec<Tag>,
 }
 impl<T: Default> HajFren<T> {
-    fn null() -> Self {
+    pub fn null() -> Self {
         HajFren {
             uuid: Uuid::nil(),
             dt_created: DateTime::default(),
@@ -111,16 +126,4 @@ struct HajFile {
 #[derive(Serialize, Deserialize, PartialEq, Eq, Clone)]
 struct Tag {
     name: String,
-}
-
-pub struct ShonkAccess {
-    dbroot: Shonk,
-}
-
-impl ShonkAccess {
-    /*
-    fn new(path: String) -> Self {
-        ShonkAccess { dbroot: Shonk {} }
-    }
-    */
 }
