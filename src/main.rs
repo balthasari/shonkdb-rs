@@ -1,4 +1,4 @@
-use crate::logic::{Haj, HajFren};
+use crate::logic::{Haj, HajFren, ROOT};
 use serde::{Deserialize, Serialize};
 use serde_json::{from_reader, from_str, to_string, to_string_pretty, to_writer, to_writer_pretty};
 pub mod data_types;
@@ -11,11 +11,19 @@ struct TestPerson {
 }
 
 fn main() {
+    /*
+        let mut anotherHaj: Haj<TestPerson> = Haj::load_from("shorkattak".to_owned());
+        anotherHaj.write_self();
+    */
+
     let hf: HajFren<TestPerson> = HajFren::null();
-
+    let hf_now: HajFren<TestPerson> = HajFren::null_now();
     // Convert the Point to a JSON string.
-    let serialized = serde_json::to_string_pretty(&hf).unwrap();
+    let mut haj: Haj<TestPerson> = Haj::new();
 
+    haj.instert_record(hf_now);
+    haj.instert_record(hf);
+
+    haj.write_self();
     // Prints serialized = {"x":1,"y":2}
-    println!("serialized = {}", serialized);
 }

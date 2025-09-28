@@ -1,0 +1,27 @@
+{
+  "path": "yasss",
+  "records": [
+    {
+      "uuid": "bedcafce-3c14-435f-b3f4-c0df501ea9ea",
+      "dt_created": "2025-09-28T17:32:31.932419311Z",
+      "dt_changed": "2025-09-28T17:32:31.932421595Z",
+      "files": null,
+      "data": {
+        "name": "",
+        "age": 0
+      },
+      "tags": []
+    },
+    {
+      "uuid": "00000000-0000-0000-0000-000000000000",
+      "dt_created": "1970-01-01T00:00:00Z",
+      "dt_changed": "1970-01-01T00:00:00Z",
+      "files": null,
+      "data": {
+        "name": "",
+        "age": 0
+      },
+      "tags": []
+    }
+  ]
+}
