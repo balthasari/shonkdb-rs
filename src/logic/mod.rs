@@ -34,8 +34,8 @@ pub struct Haj<T>
 where
     T: Default,
 {
-    path: String, //eigentlich of type Path
-    records: Vec<HajFren<T>>,
+    pub path: String, //eigentlich of type Path
+    pub records: Vec<HajFren<T>>,
 }
 
 impl<T> Haj<T>
@@ -126,12 +126,12 @@ where
 
 #[derive(Serialize, Deserialize)]
 pub struct HajFren<T: Default> {
-    uuid: Uuid,
-    dt_created: DateTime<Utc>,
-    dt_changed: DateTime<Utc>,
-    files: Option<Vec<HajFile>>,
-    data: T,
-    tags: Vec<Tag>,
+    pub uuid: Uuid,
+    pub dt_created: DateTime<Utc>,
+    pub dt_changed: DateTime<Utc>,
+    pub files: Option<Vec<HajFile>>,
+    pub data: T,
+    pub tags: Vec<Tag>,
 }
 impl<T: Default> HajFren<T> {
     pub fn null() -> Self {
@@ -190,11 +190,15 @@ impl<T: Default> HajFren<T> {
 }
 //TO BE VERBESSERT
 #[derive(Serialize, Deserialize)]
-struct HajFile {
-    path: String,
+pub struct HajFile {
+    pub path: String,
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Eq, Clone)]
-struct Tag {
+pub struct Tag {
     name: String,
+}
+
+pub trait HajDeriveable<T: Default> {
+    fn from_haj(source_haj: Haj<T>) -> Self;
 }
